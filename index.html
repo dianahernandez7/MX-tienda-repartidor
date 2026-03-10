@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda del Repartidor M&eacute;xico - Todo para tu reparto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        button { cursor: pointer; border: none; font-family: inherit; }
+        ul { list-style: none; }
+
+        /* ===== VARIABLES ===== */
+        :root {
+            --primary: #fe3f23;
+            --primary-dark: #e0341a;
+            --primary-light: #ff6b4a;
+            --secondary: #ff794c;
+            --accent-green: #20d5b6;
+            --accent-teal: #23b0b9;
+            --bg-cream: #fff8f0;
+            --bg-light: #f0f2f5;
+            --bg-white: #ffffff;
+            --text-dark: #1a1a2e;
+            --text-mid: #555;
+            --text-light: #888;
+            --border: #e0e0e0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --max-width: 1360px;
+            --transition: all 0.25s ease;
+        }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            background: var(--text-dark);
+            color: #ccc;
+            font-size: 12px;
+            padding: 6px 0;
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-bar a { color: #ccc; transition: var(--transition); }
+        .top-bar a:hover { color: #fff; }
+        .top-bar-links { display: flex; gap: 20px; }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: var(--primary);
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(254,63,35,0.3);
+        }
+        .header .container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+        .logo-text {
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 1.2;
+        }
+        .logo-text span { font-weight: 400; font-size: 11px; display: block; opacity: 0.85; }
+
+        /* Search */
+        .search-bar {
+            flex: 1;
+            max-width: 680px;
+            display: flex;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-bar select {
+            border: none;
+            background: #f7f7f7;
+            padding: 0 14px;
+            font-size: 13px;
+            color: #555;
+            border-right: 1px solid #e0e0e0;
+            cursor: pointer;
+            outline: none;
+        }
+        .search-bar input {
+            flex: 1;
+            border: none;
+            padding: 12px 16px;
+            font-size: 14px;
+            outline: none;
+            min-width: 0;
+        }
+        .search-bar input::placeholder { color: #aaa; }
+        .search-bar button {
+            background: var(--accent-teal);
+            color: #fff;
+            padding: 0 20px;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        .search-bar button:hover { background: #1d9aa2; }
+
+        /* Header Actions */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .header-btn {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .header-btn:hover { background: rgba(255,255,255,0.25); }
+        .header-btn i { font-size: 18px; }
+        .cart-badge {
+            background: var(--accent-green);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            top: -2px;
+        }
+
+        /* ===== NAV BAR ===== */
+        .nav-bar {
+            background: var(--primary-dark);
+            padding: 0;
+        }
+        .nav-bar .container {
+            display: flex;
+            align-items: center;
+        }
+        .nav-categories-btn {
+            background: rgba(0,0,0,0.2);
+            color: #fff;
+            padding: 11px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+        .nav-categories-btn:hover { background: rgba(0,0,0,0.3); }
+        .nav-links {
+            display: flex;
+            gap: 0;
+        }
+        .nav-links a {
+            color: rgba(255,255,255,0.85);
+            padding: 11px 18px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-links a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+        .nav-links a.active { color: #fff; background: rgba(255,255,255,0.1); }
+        .nav-tag {
+            background: var(--accent-green);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== PROMO STRIP ===== */
+        .promo-strip {
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-teal));
+            padding: 10px 0;
+            text-align: center;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .promo-strip i { margin-right: 6px; }
+
+        /* ===== HERO BANNER ===== */
+        .hero {
+            padding: 20px 0;
+        }
+        .hero .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 16px;
+        }
+        .hero-main {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-radius: var(--radius-lg);
+            padding: 50px 50px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 320px;
+        }
+        .hero-main::after {
+            content: '';
+            position: absolute;
+            right: -30px;
+            bottom: -30px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(254,63,35,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            width: fit-content;
+        }
+        .hero-main h1 {
+            font-size: 34px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-main h1 span { color: var(--secondary); }
+        .hero-main p {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-bottom: 24px;
+            max-width: 420px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+            width: fit-content;
+        }
+        .hero-cta:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(254,63,35,0.4); }
+
+        .hero-side {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .hero-card {
+            flex: 1;
+            border-radius: var(--radius-lg);
+            padding: 28px 24px;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-card-1 {
+            background: linear-gradient(135deg, var(--accent-green), #18c4a0);
+        }
+        .hero-card-2 {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+        .hero-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+        .hero-card p { font-size: 13px; opacity: 0.9; }
+        .hero-card-icon {
+            position: absolute;
+            right: 16px;
+            bottom: 16px;
+            font-size: 48px;
+            opacity: 0.2;
+        }
+
+        /* ===== TRUST BAR ===== */
+        .trust-bar {
+            padding: 20px 0;
+        }
+        .trust-bar .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .trust-item {
+            background: #fff;
+            padding: 18px 20px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .trust-item:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .trust-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .trust-icon.green { background: #e6faf5; color: var(--accent-green); }
+        .trust-icon.blue { background: #e6f5f7; color: var(--accent-teal); }
+        .trust-icon.orange { background: #fff0e6; color: var(--secondary); }
+        .trust-icon.red { background: #ffe8e5; color: var(--primary); }
+        .trust-text h4 { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+        .trust-text p { font-size: 11px; color: var(--text-light); }
+
+        /* ===== MAIN LAYOUT ===== */
+        .main-layout {
+            padding: 0 0 40px;
+        }
+        .main-layout .container {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 24px;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .sidebar-card {
+            background: #fff;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        .sidebar-title {
+            padding: 16px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-dark);
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sidebar-title i { color: var(--primary); }
+        .category-list { padding: 8px 0; }
+        .category-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 20px;
+            font-size: 13px;
+            color: var(--text-mid);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .category-item:hover {
+            background: var(--bg-cream);
+            color: var(--primary);
+        }
+        .category-item.active {
+            background: var(--bg-cream);
+            color: var(--primary);
+            font-weight: 600;
+            border-right: 3px solid var(--primary);
+        }
+        .category-item i { width: 20px; text-align: center; font-size: 15px; }
+        .category-count {
+            margin-left: auto;
+            background: #f0f2f5;
+            color: #888;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        /* Sidebar - Price Filter */
+        .price-filter { padding: 16px 20px; }
+        .price-range {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .price-input {
+            flex: 1;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 13px;
+            text-align: center;
+            outline: none;
+            transition: var(--transition);
+        }
+        .price-input:focus { border-color: var(--primary); }
+        .price-input::placeholder { color: #bbb; }
+        .filter-btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .filter-btn:hover { background: var(--primary-dark); }
+
+        /* Sidebar - Help */
+        .sidebar-help {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            padding: 24px 20px;
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+        .sidebar-help i { font-size: 32px; margin-bottom: 12px; color: var(--accent-green); }
+        .sidebar-help h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+        .sidebar-help p { font-size: 12px; opacity: 0.7; margin-bottom: 14px; }
+        .sidebar-help a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent-green);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* ===== CONTENT ===== */
+        .content { min-width: 0; }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .section-header h2 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+        .section-header h2 span { color: var(--primary); }
+
+        /* Sort Bar */
+        .sort-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .sort-bar span { font-size: 13px; color: var(--text-light); }
+        .sort-select {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 13px;
+            outline: none;
+            cursor: pointer;
+        }
+        .view-toggle {
+            display: flex;
+            gap: 4px;
+        }
+        .view-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background: #fff;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+        .view-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+        /* ===== PRODUCT GRID ===== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+        .product-card {
+            background: #fff;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+        .product-badges {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 2;
+        }
+        .badge {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .badge-sale { background: var(--primary); color: #fff; }
+        .badge-new { background: var(--accent-green); color: #fff; }
+        .badge-hot { background: #f59e0b; color: #fff; }
+        .badge-out { background: #6b7280; color: #fff; }
+
+        .product-wishlist {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 34px;
+            height: 34px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #ccc;
+            transition: var(--transition);
+            z-index: 2;
+            backdrop-filter: blur(4px);
+        }
+        .product-wishlist:hover { color: var(--primary); background: #fff; }
+
+        .product-image {
+            height: 200px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .product-image .placeholder-img {
+            font-size: 64px;
+            color: #ddd;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .quick-view {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26,26,46,0.85);
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            transform: translateY(100%);
+            transition: var(--transition);
+            backdrop-filter: blur(4px);
+        }
+        .product-card:hover .quick-view { transform: translateY(0); }
+
+        .product-info {
+            padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-category {
+            font-size: 11px;
+            color: var(--accent-teal);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+        .product-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 10px;
+        }
+        .stars { color: #f59e0b; font-size: 12px; }
+        .rating-count { font-size: 11px; color: var(--text-light); }
+
+        .product-price {
+            margin-top: auto;
+            margin-bottom: 12px;
+        }
+        .price-old {
+            font-size: 12px;
+            color: var(--text-light);
+            text-decoration: line-through;
+            margin-bottom: 2px;
+        }
+        .price-current {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+        .price-current .currency { font-size: 14px; }
+        .price-discount {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-left: 6px;
+        }
+
+        .product-shipping {
+            font-size: 11px;
+            color: var(--accent-green);
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-cart {
+            flex: 1;
+            padding: 10px 16px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .btn-cart:hover { background: var(--primary-dark); }
+        .btn-cart.disabled {
+            background: #e0e0e0;
+            color: #999;
+            cursor: not-allowed;
+        }
+        .btn-buy {
+            padding: 10px 16px;
+            background: var(--accent-teal);
+            color: #fff;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .btn-buy:hover { background: #1d9aa2; }
+
+        /* ===== FLASH SALE BANNER ===== */
+        .flash-sale {
+            background: linear-gradient(135deg, #1a1a2e, #2d1b69);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+            overflow: hidden;
+            position: relative;
+        }
+        .flash-sale::before {
+            content: '';
+            position: absolute;
+            right: 100px;
+            top: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(254,63,35,0.2), transparent 70%);
+            border-radius: 50%;
+        }
+        .flash-info h3 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .flash-info h3 i { color: #f59e0b; margin-right: 8px; }
+        .flash-info p { font-size: 14px; opacity: 0.7; }
+        .flash-timer {
+            display: flex;
+            gap: 10px;
+        }
+        .timer-block {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 12px 16px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+        .timer-number {
+            font-size: 26px;
+            font-weight: 800;
+            display: block;
+        }
+        .timer-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
+
+        /* ===== CATEGORIES GRID ===== */
+        .categories-section {
+            padding: 30px 0;
+        }
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .category-card {
+            background: #fff;
+            border-radius: var(--radius-md);
+            padding: 24px 16px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .category-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+        .category-card:hover .cat-icon { transform: scale(1.1); }
+        .cat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 24px;
+            transition: var(--transition);
+        }
+        .cat-icon.c1 { background: #ffe8e5; color: var(--primary); }
+        .cat-icon.c2 { background: #e6faf5; color: var(--accent-green); }
+        .cat-icon.c3 { background: #fff0e6; color: var(--secondary); }
+        .cat-icon.c4 { background: #e6f5f7; color: var(--accent-teal); }
+        .cat-icon.c5 { background: #f0e6ff; color: #7c3aed; }
+        .cat-icon.c6 { background: #fef3cd; color: #d97706; }
+        .category-card h4 { font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 4px; }
+        .category-card p { font-size: 11px; color: var(--text-light); }
+
+        /* ===== NEWSLETTER ===== */
+        .newsletter {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            margin: 0 20px 40px;
+            max-width: var(--max-width);
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            color: #fff;
+        }
+        .newsletter h3 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+        .newsletter p { font-size: 14px; opacity: 0.85; }
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        .newsletter-form input {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            width: 300px;
+            outline: none;
+        }
+        .newsletter-form button {
+            padding: 14px 28px;
+            background: var(--text-dark);
+            color: #fff;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+        .newsletter-form button:hover { background: #2d2d4e; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--text-dark);
+            color: #ccc;
+            padding: 50px 0 0;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-brand p {
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+        .footer-social { display: flex; gap: 10px; }
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #ccc;
+            transition: var(--transition);
+        }
+        .footer-social a:hover { background: var(--primary); color: #fff; }
+
+        .footer h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a {
+            font-size: 13px;
+            opacity: 0.7;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .footer-links a:hover { opacity: 1; color: var(--primary); }
+
+        .footer-payment {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .payment-icon {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .scroll-top.visible { opacity: 1; transform: translateY(0); }
+        .scroll-top:hover { background: var(--primary-dark); transform: translateY(-3px); }
+
+        /* ===== WHATSAPP BUTTON ===== */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 56px;
+            height: 56px;
+            background: #25d366;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+            transition: var(--transition);
+            z-index: 999;
+            animation: pulse-wa 2s infinite;
+        }
+        .whatsapp-btn:hover { transform: scale(1.1); }
+        @keyframes pulse-wa {
+            0%, 100% { box-shadow: 0 4px 16px rgba(37,211,102,0.4); }
+            50% { box-shadow: 0 4px 24px rgba(37,211,102,0.6); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero .container { grid-template-columns: 1fr; }
+            .hero-side { flex-direction: row; }
+            .main-layout .container { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+            .categories-grid { grid-template-columns: repeat(3, 1fr); }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .newsletter { flex-direction: column; text-align: center; margin: 0 20px 40px; }
+        }
+        @media (max-width: 768px) {
+            .top-bar { display: none; }
+            .header .container { flex-wrap: wrap; }
+            .search-bar { order: 3; flex-basis: 100%; }
+            .search-bar select { display: none; }
+            .hero-main { padding: 30px 24px; min-height: 250px; }
+            .hero-main h1 { font-size: 24px; }
+            .hero-side { flex-direction: column; }
+            .trust-bar .container { grid-template-columns: repeat(2, 1fr); }
+            .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .flash-sale { flex-direction: column; text-align: center; gap: 20px; }
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-links { overflow-x: auto; }
+            .newsletter-form { flex-direction: column; width: 100%; }
+            .newsletter-form input { width: 100%; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .products-grid { grid-template-columns: 1fr; }
+            .header-btn span { display: none; }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .product-card { animation: fadeInUp 0.5s ease forwards; }
+        .product-card:nth-child(1) { animation-delay: 0.05s; }
+        .product-card:nth-child(2) { animation-delay: 0.1s; }
+        .product-card:nth-child(3) { animation-delay: 0.15s; }
+        .product-card:nth-child(4) { animation-delay: 0.2s; }
+        .product-card:nth-child(5) { animation-delay: 0.25s; }
+        .product-card:nth-child(6) { animation-delay: 0.3s; }
+        .product-card:nth-child(7) { animation-delay: 0.35s; }
+        .product-card:nth-child(8) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="container">
+            <span><i class="fas fa-motorcycle"></i> Exclusivo para repartidores activos en SoyRappi</span>
+            <div class="top-bar-links">
+                <a href="#"><i class="fas fa-question-circle"></i> Centro de ayuda</a>
+                <a href="#"><i class="fas fa-file-alt"></i> Pol&iacute;tica de garant&iacute;a</a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i> Rastrea tu pedido</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">
+                <div class="logo-icon">&#128722;</div>
+                <div class="logo-text">
+                    Tienda del Repartidor
+                    <span>M&eacute;xico &bull; Equipo Oficial</span>
+                </div>
+            </a>
+            <div class="search-bar">
+                <select>
+                    <option>Todas las categor&iacute;as</option>
+                    <option>Mochilas</option>
+                    <option>Ropa</option>
+                    <option>Accesorios</option>
+                    <option>Tecnolog&iacute;a</option>
+                    <option>Protecci&oacute;n</option>
+                </select>
+                <input type="text" placeholder="Busca mochilas, impermeables, chamarras y m&aacute;s...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="header-actions">
+                <a href="#" class="header-btn">
+                    <i class="far fa-user"></i>
+                    <span>Mi cuenta</span>
+                </a>
+                <a href="#" class="header-btn">
+                    <i class="far fa-heart"></i>
+                    <span>Favoritos</span>
+                </a>
+                <a href="#" class="header-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Carrito</span>
+                    <div class="cart-badge">2</div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAV BAR -->
+    <nav class="nav-bar">
+        <div class="container">
+            <button class="nav-categories-btn">
+                <i class="fas fa-bars"></i> Categor&iacute;as
+            </button>
+            <div class="nav-links">
+                <a href="#" class="active"><i class="fas fa-fire"></i> Lo m&aacute;s vendido</a>
+                <a href="#">Ofertas <span class="nav-tag">Hot</span></a>
+                <a href="#">Nuevos ingresos</a>
+                <a href="#">Paquetes ahorro</a>
+                <a href="#">Temporada de lluvias</a>
+                <a href="#">Garant&iacute;as</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PROMO STRIP -->
+    <div class="promo-strip">
+        <i class="fas fa-truck-fast"></i>
+        Env&iacute;o GRATIS en compras mayores a $999 &bull; Paga con Mercado Pago o tarjeta &bull; Garant&iacute;a de 2 meses
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-main">
+                <div class="hero-badge"><i class="fas fa-bolt"></i> Temporada de lluvias 2026</div>
+                <h1>Equipa tu reparto<br>con lo <span>mejor</span></h1>
+                <p>Mochilas t&eacute;rmicas, impermeables, chamarras y todo lo que necesitas para repartir sin parar, llueva o truene.</p>
+                <a href="#productos" class="hero-cta">
+                    Ver cat&aacute;logo completo <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="hero-side">
+                <div class="hero-card hero-card-1">
+                    <h3>Env&iacute;o gratis</h3>
+                    <p>En compras mayores a $999 MXN a todo M&eacute;xico</p>
+                    <i class="fas fa-truck-fast hero-card-icon"></i>
+                </div>
+                <div class="hero-card hero-card-2">
+                    <h3>Hasta 30% OFF</h3>
+                    <p>En paquetes de equipamiento completo</p>
+                    <i class="fas fa-tags hero-card-icon"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST BAR -->
+    <section class="trust-bar">
+        <div class="container">
+            <div class="trust-item">
+                <div class="trust-icon green"><i class="fas fa-truck-fast"></i></div>
+                <div class="trust-text">
+                    <h4>Env&iacute;o a todo M&eacute;xico</h4>
+                    <p>2 a 15 d&iacute;as h&aacute;biles</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon blue"><i class="fas fa-shield-halved"></i></div>
+                <div class="trust-text">
+                    <h4>Garant&iacute;a 2 meses</h4>
+                    <p>En materiales y fabricaci&oacute;n</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon orange"><i class="fas fa-credit-card"></i></div>
+                <div class="trust-text">
+                    <h4>Pago seguro</h4>
+                    <p>Tarjeta, Mercado Pago, cr&eacute;dito</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon red"><i class="fas fa-headset"></i></div>
+                <div class="trust-text">
+                    <h4>Soporte repartidor</h4>
+                    <p>WhatsApp y correo</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORIES SECTION -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Compra por <span>categor&iacute;a</span></h2>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="cat-icon c1"><i class="fas fa-box-open"></i></div>
+                    <h4>Mochilas T&eacute;rmicas</h4>
+                    <p>8 productos</p>
+                </div>
+                <div class="category-card">
+                    <div class="cat-icon c2"><i class="fas fa-cloud-rain"></i></div>
+                    <h4>Impermeables</h4>
+                    <p>5 productos</p>
+                </div>
+                <div class="category-card">
+                    <div class="cat-icon c3"><i class="fas fa-jacket"></i></div>
+                    <h4>Chamarras</h4>
+                    <p>4 productos</p>
+                </div>
+                <div class="category-card">
+                    <div class="cat-icon c4"><i class="fas fa-mobile-screen"></i></div>
+                    <h4>Soportes y Tech</h4>
+                    <p>6 productos</p>
+                </div>
+                <div class="category-card">
+                    <div class="cat-icon c5"><i class="fas fa-id-card"></i></div>
+                    <h4>Tarjetas y Pagos</h4>
+                    <p>3 productos</p>
+                </div>
+                <div class="category-card">
+                    <div class="cat-icon c6"><i class="fas fa-helmet-safety"></i></div>
+                    <h4>Protecci&oacute;n</h4>
+                    <p>7 productos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN LAYOUT -->
+    <section class="main-layout" id="productos">
+        <div class="container">
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="sidebar-card">
+                    <div class="sidebar-title"><i class="fas fa-layer-group"></i> Categor&iacute;as</div>
+                    <div class="category-list">
+                        <div class="category-item active">
+                            <i class="fas fa-th-large"></i> Todos los productos
+                            <span class="category-count">24</span>
+                        </div>
+                        <div class="category-item">
+                            <i class="fas fa-box-open"></i> Mochilas T&eacute;rmicas
+                            <span class="category-count">8</span>
+                        </div>
+                        <div class="category-item">
+                            <i class="fas fa-cloud-rain"></i> Impermeables
+                            <span class="category-count">5</span>
+                        </div>
+                        <div class="category-item">
+                            <i class="fas fa-vest"></i> Chamarras y Ropa
+                            <span class="category-count">4</span>
+                        </div>
+                        <div class="category-item">
+                            <i class="fas fa-mobile-screen"></i> Soportes y Tech
+                            <span class="category-count">6</span>
+                        </div>
+                        <div class="category-item">
+                            <i class="fas fa-id-card"></i> Tarjetas y Pagos
+                            <span class="category-count">3</span>
+                        </div>
+                        <div class="category-item">
+                            <i class="fas fa-helmet-safety"></i> Protecci&oacute;n
+                            <span class="category-count">7</span>
+                        </div>
+                        <div class="category-item">
+                            <i class="fas fa-droplet"></i> Temporada de lluvias
+                            <span class="category-count">6</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <div class="sidebar-title"><i class="fas fa-sliders"></i> Rango de precio</div>
+                    <div class="price-filter">
+                        <div class="price-range">
+                            <input type="text" class="price-input" placeholder="$ Min">
+                            <input type="text" class="price-input" placeholder="$ Max">
+                        </div>
+                        <button class="filter-btn"><i class="fas fa-filter"></i> Filtrar</button>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <div class="sidebar-title"><i class="fas fa-star"></i> Calificaci&oacute;n</div>
+                    <div class="category-list">
+                        <div class="category-item">
+                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> y m&aacute;s
+                        </div>
+                        <div class="category-item">
+                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span> y m&aacute;s
+                        </div>
+                        <div class="category-item">
+                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></span> y m&aacute;s
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-help">
+                    <i class="fas fa-life-ring"></i>
+                    <h4>&iquest;Necesitas ayuda?</h4>
+                    <p>Nuestro equipo de soporte est&aacute; listo para ayudarte</p>
+                    <a href="#"><i class="fab fa-whatsapp"></i> Contactar por WhatsApp</a>
+                </div>
+            </aside>
+
+            <!-- CONTENT -->
+            <div class="content">
+                <!-- Flash Sale -->
+                <div class="flash-sale">
+                    <div class="flash-info">
+                        <h3><i class="fas fa-bolt"></i> Venta Flash - Equipamiento Completo</h3>
+                        <p>Hasta 30% de descuento en paquetes para temporada de lluvias</p>
+                    </div>
+                    <div class="flash-timer">
+                        <div class="timer-block">
+                            <span class="timer-number" id="hours">08</span>
+                            <span class="timer-label">Horas</span>
+                        </div>
+                        <div class="timer-block">
+                            <span class="timer-number" id="minutes">45</span>
+                            <span class="timer-label">Min</span>
+                        </div>
+                        <div class="timer-block">
+                            <span class="timer-number" id="seconds">22</span>
+                            <span class="timer-label">Seg</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sort Bar -->
+                <div class="section-header">
+                    <h2>Todos los <span>productos</span></h2>
+                    <div class="sort-bar">
+                        <span>Ordenar por:</span>
+                        <select class="sort-select">
+                            <option>M&aacute;s relevantes</option>
+                            <option>Menor precio</option>
+                            <option>Mayor precio</option>
+                            <option>M&aacute;s vendidos</option>
+                            <option>Mejor calificados</option>
+                        </select>
+                        <div class="view-toggle">
+                            <button class="view-btn active"><i class="fas fa-grip"></i></button>
+                            <button class="view-btn"><i class="fas fa-list"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="products-grid">
+                    <!-- Product 1 -->
+                    <div class="product-card">
+                        <div class="product-badges">
+                            <span class="badge badge-hot">M&aacute;s vendido</span>
+                        </div>
+                        <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                        <div class="product-image">
+                            <div class="placeholder-img"><i class="fas fa-box-open"></i></div>
+                            <div class="quick-view"><i class="far fa-eye"></i> Vista r&aacute;pida</div>
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Mochilas</span>
+                            <h3 class="product-name">Mochila T&eacute;rmica Eco - Capacidad 45L</h3>
+                            <div class="product-rating">
+                                <span class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                </span>
+                                <span class="rating-count">(128)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="price-old">$780.00</div>
+                                <span class="price-current"><span class="currency">$</span>630<sup>.00</sup></span>
+                                <span class="price-discount">-19%</span>
+                            </div>
+                            <div class="product-shipping"><i class="fas fa-truck"></i> Env&iacute;o gratis</div>
+                            <div class="product-actions">
+                                <button class="btn-cart disabled"><i class="fas fa-clock"></i> Agotado</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="product-card">
+                        <div class="product-badges">
+                            <span class="badge badge-new">Nuevo</span>
+                        </div>
+                        <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                        <div class="product-image">
+                            <div class="placeholder-img"><i class="fas fa-credit-card"></i></div>
+                            <div class="quick-view"><i class="far fa-eye"></i> Vista r&aacute;pida</div>
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Tarjetas y Pagos</span>
+                            <h3 class="product-name">Tarjeta Pomelo - Pagos y Retiros</h3>
+                            <div class="product-rating">
+                                <span class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </span>
+                                <span class="rating-count">(87)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price-current"><span class="currency">$</span>180<sup>.00</sup></span>
+                            </div>
+                            <div class="product-shipping"><i class="fas fa-truck"></i> Env&iacute;o est&aacute;ndar</div>
+                            <div class="product-actions">
+                                <button class="btn-cart"><i class="fas fa-cart-plus"></i> Agregar</button>
+                                <button class="btn-buy">Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="product-card">
+                        <div class="product-badges">
+                            <span class="badge badge-sale">-25%</span>
+                        </div>
+                        <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                        <div class="product-image">
+                            <div class="placeholder-img"><i class="fas fa-cloud-rain"></i></div>
+                            <div class="quick-view"><i class="far fa-eye"></i> Vista r&aacute;pida</div>
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Impermeables</span>
+                            <h3 class="product-name">Impermeable Completo - Resistente al agua</h3>
+                            <div class="product-rating">
+                                <span class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </span>
+                                <span class="rating-count">(215)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="price-old">$500.00</div>
+                                <span class="price-current"><span class="currency">$</span>375<sup>.00</sup></span>
+                                <span class="price-discount">-25%</span>
+                            </div>
+                            <div class="product-shipping"><i class="fas fa-truck"></i> Env&iacute;o gratis</div>
+                            <div class="product-actions">
+                                <button class="btn-cart"><i class="fas fa-cart-plus"></i> Agregar</button>
+                                <button class="btn-buy">Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="product-card">
+                        <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                        <div class="product-image">
+                            <div class="placeholder-img"><i class="fas fa-vest"></i></div>
+                            <div class="quick-view"><i class="far fa-eye"></i> Vista r&aacute;pida</div>
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Chamarras</span>
+                            <h3 class="product-name">Chamarra Polar - Protecci&oacute;n contra fr&iacute;o</h3>
+                            <div class="product-rating">
+                                <span class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </span>
+                                <span class="rating-count">(64)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price-current"><span class="currency">$</span>350<sup>.00</sup></span>
+                            </div>
+                            <div class="product-shipping"><i class="fas fa-truck"></i> Env&iacute;o est&aacute;ndar</div>
+                            <div class="product-actions">
+                                <button class="btn-cart disabled"><i class="fas fa-clock"></i> Agotado</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 5 -->
+                    <div class="product-card">
+                        <div class="product-badges">
+                            <span class="badge badge-hot">Popular</span>
+                        </div>
+                        <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                        <div class="product-image">
+                            <div class="placeholder-img"><i class="fas fa-mobile-screen-button"></i></div>
+                            <div class="quick-view"><i class="far fa-eye"></i> Vista r&aacute;pida</div>
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Soportes y Tech</span>
+                            <h3 class="product-name">Soporte Celular Universal para Moto/Bici</h3>
+                            <div class="product-rating">
+                                <span class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                </span>
+                                <span class="rating-count">(342)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="price-old">$299.00</div>
+                                <span class="price-current"><span class="currency">$</span>199<sup>.00</sup></span>
+                                <span class="price-discount">-33%</span>
+                            </div>
+                            <div class="product-shipping"><i class="fas fa-truck"></i> Env&iacute;o gratis</div>
+                            <div class="product-actions">
+                                <button class="btn-cart"><i class="fas fa-cart-plus"></i> Agregar</button>
+                                <button class="btn-buy">Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 6 -->
+                    <div class="product-card">
+                        <div class="product-badges">
+                            <span class="badge badge-new">Nuevo</span>
+                        </div>
+                        <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                        <div class="product-image">
+                            <div class="placeholder-img"><i class="fas fa-helmet-safety"></i></div>
+                            <div class="quick-view"><i class="far fa-eye"></i> Vista r&aacute;pida</div>
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Protecci&oacute;n</span>
+                            <h3 class="product-name">Casco Certificado con Luz LED trasera</h3>
+                            <div class="product-rating">
+                                <span class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </span>
+                                <span class="rating-count">(95)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price-current"><span class="currency">$</span>450<sup>.00</sup></span>
+                            </div>
+                            <div class="product-shipping"><i class="fas fa-truck"></i> Env&iacute;o est&aacute;ndar</div>
+                            <div class="product-actions">
+                                <button class="btn-cart"><i class="fas fa-cart-plus"></i> Agregar</button>
+                                <button class="btn-buy">Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 7 -->
+                    <div class="product-card">
+                        <div class="product-badges">
+                            <span class="badge badge-sale">-15%</span>
+                        </div>
+                        <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                        <div class="product-image">
+                            <div class="placeholder-img"><i class="fas fa-mitten"></i></div>
+                            <div class="quick-view"><i class="far fa-eye"></i> Vista r&aacute;pida</div>
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Protecci&oacute;n</span>
+                            <h3 class="product-name">Guantes T&aacute;ctiles Impermeables para Moto</h3>
+                            <div class="product-rating">
+                                <span class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </span>
+                                <span class="rating-count">(178)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="price-old">$280.00</div>
+                                <span class="price-current"><span class="currency">$</span>238<sup>.00</sup></span>
+                                <span class="price-discount">-15%</span>
+                            </div>
+                            <div class="product-shipping"><i class="fas fa-truck"></i> Env&iacute;o est&aacute;ndar</div>
+                            <div class="product-actions">
+                                <button class="btn-cart"><i class="fas fa-cart-plus"></i> Agregar</button>
+                                <button class="btn-buy">Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 8 -->
+                    <div class="product-card">
+                        <div class="product-badges">
+                            <span class="badge badge-hot">Kit</span>
+                        </div>
+                        <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                        <div class="product-image">
+                            <div class="placeholder-img"><i class="fas fa-suitcase"></i></div>
+                            <div class="quick-view"><i class="far fa-eye"></i> Vista r&aacute;pida</div>
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Paquetes</span>
+                            <h3 class="product-name">Kit Completo Repartidor - Mochila + Impermeable + Soporte</h3>
+                            <div class="product-rating">
+                                <span class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </span>
+                                <span class="rating-count">(56)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="price-old">$1,290.00</div>
+                                <span class="price-current"><span class="currency">$</span>899<sup>.00</sup></span>
+                                <span class="price-discount">-30%</span>
+                            </div>
+                            <div class="product-shipping"><i class="fas fa-truck"></i> Env&iacute;o GRATIS</div>
+                            <div class="product-actions">
+                                <button class="btn-cart"><i class="fas fa-cart-plus"></i> Agregar</button>
+                                <button class="btn-buy">Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter">
+        <div>
+            <h3>&#128227; &iexcl;No te pierdas las ofertas!</h3>
+            <p>Suscr&iacute;bete y recibe descuentos exclusivos para repartidores</p>
+        </div>
+        <form class="newsletter-form" onsubmit="return false;">
+            <input type="email" placeholder="Tu correo electr&oacute;nico">
+            <button type="submit">Suscribirme</button>
+        </form>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo" style="margin-bottom:16px;">
+                        <div class="logo-icon">&#128722;</div>
+                        <div class="logo-text">
+                            Tienda del Repartidor
+                            <span>M&eacute;xico &bull; Equipo Oficial</span>
+                        </div>
+                    </div>
+                    <p>La tienda oficial de equipamiento para repartidores activos en Rappi. Productos de calidad con garant&iacute;a para que tu reparto nunca pare.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Tienda</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Todos los productos</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Mochilas t&eacute;rmicas</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Impermeables</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Chamarras y ropa</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Paquetes ahorro</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Soporte</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Preguntas frecuentes</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Pol&iacute;tica de garant&iacute;a</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Rastrea tu pedido</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contacto WhatsApp</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> T&eacute;rminos y condiciones</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>M&eacute;todos de pago</h4>
+                    <div class="footer-payment">
+                        <span class="payment-icon"><i class="fab fa-cc-visa"></i> Visa</span>
+                        <span class="payment-icon"><i class="fab fa-cc-mastercard"></i> Master</span>
+                        <span class="payment-icon"><i class="fas fa-wallet"></i> Mercado Pago</span>
+                        <span class="payment-icon"><i class="fas fa-money-bill-wave"></i> Cr&eacute;dito</span>
+                    </div>
+                    <h4 style="margin-top:24px;">Horario de entrega</h4>
+                    <p style="font-size:13px;opacity:0.7;line-height:1.6;">
+                        <i class="far fa-clock"></i> Lun - S&aacute;b: 8:00 am - 6:00 pm<br>
+                        <i class="fas fa-truck"></i> 2 a 15 d&iacute;as h&aacute;biles
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2026 Tienda del Repartidor M&eacute;xico. Todos los derechos reservados.</span>
+                <span>Solo para socios repartidores activos en SoyRappi</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOAT -->
+    <a href="#" class="whatsapp-btn" title="Cont&aacute;ctanos por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- SCROLL TO TOP -->
+    <button class="scroll-top" id="scrollTop">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Countdown Timer
+        function startCountdown() {
+            let hours = 8, minutes = 45, seconds = 22;
+            setInterval(() => {
+                seconds--;
+                if (seconds < 0) { seconds = 59; minutes--; }
+                if (minutes < 0) { minutes = 59; hours--; }
+                if (hours < 0) { hours = 23; minutes = 59; seconds = 59; }
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            }, 1000);
+        }
+        startCountdown();
+
+        // Scroll to top
+        const scrollBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Category active toggle
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // View toggle
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Wishlist toggle
+        document.querySelectorAll('.product-wishlist').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const icon = btn.querySelector('i');
+                icon.classList.toggle('far');
+                icon.classList.toggle('fas');
+                btn.style.color = icon.classList.contains('fas') ? '#fe3f23' : '#ccc';
+            });
+        });
+
+        // Add to cart animation
+        document.querySelectorAll('.btn-cart:not(.disabled)').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const original = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i> Agregado';
+                this.style.background = '#20d5b6';
+                setTimeout(() => {
+                    this.innerHTML = original;
+                    this.style.background = '';
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
